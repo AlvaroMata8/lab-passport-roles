@@ -1,12 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Ironhack Bureau Investigation</title>
-</head>
-<body>
-  Hello, Ironhacker!
-</body>
-</html>
+<% if(user && user.role === 'Boss') { %>
+  hi <%= user.username %>, 
+  <br>
+  <a href="/boss">create users</a>
+  <br>
+  <% } else if (user && user.role === 'Developer'){%>
+    hi developer <%= user.username %>,<br>
+    <% } else if (user && user.role === 'TA'){%>
+      hi TA <%= user.username %><br>
+    <% } else if (user && user.role === 'Alumni'){%>
+      hi Alumni <%= user.username %><br>
+    <% } if (user) {%>
+      <ul>
+        <br>
+        List of users
+        <br>
+      <% users.forEach((u)=>{ %>
+        <% if(u.role != 'Boss') { %>
+          <li>name: <%= u.username %> / Role: <%= u.role %> | <a href="/view-user/<%= u._id %>">view profile</a> <% if(user.role === 'Boss') { %>| <a href="/delete/<%= u._id%>"> delete</a><% } %></li>
+        <% } %>
+      <% }) %>
+    </ul>
+      <a href="/edit/<%= user._id %>">edit my profile</a><br>
+      <a href="/logout">Logout</a>
+    <% } else {%>
+   Identify yourself: 
+  <form action="/" method="POST">
+    <label for="username">Username</label>
+    <br>
+    <input id="username" type="text" name="username"> 
+    <br>
+    <label for="password">Password</label>
+    <br>
+    <input id="password" type="password" name="password">
+    <% if (typeof message !== "undefined") { %>
+      <div class="error-message">
+        <%= message %>
+      </div>
+      <% } %>
+        <br>
+        <button>login</button>
+  </form><br><br><br>
+<% } %>

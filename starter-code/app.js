@@ -10,13 +10,15 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
+
 const app = express();
 
 // Controllers
-const siteController = require("./routes/siteController");
+const index = require('./routes/index');
+const auth= require("./routes/auth")
 
 // Mongoose configuration
-mongoose.connect("mongodb://localhost/ibi-ironhack");
+mongoose.connect("mongodb://localhost/ibi-ironhack")
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -31,7 +33,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
-app.use("/", siteController);
+app.use('/', index);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
